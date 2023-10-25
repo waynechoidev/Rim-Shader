@@ -44,7 +44,7 @@ layout(std140) uniform Rim
     bool useSmoothstep; // 4    16
     float rimStrength; // 4     20
     // 24
-} rim;
+};
 
 uniform sampler2D theTexture;
 
@@ -144,13 +144,15 @@ void main()
     
     res += computeSpotLight(posWorld, normalWorld, toEye) * light.isSpot;
 
-    float rimRes = (1.0 - dot(normalWorld, toEye));
-    rimRes = pow(abs(rimRes), rim.rimPower);
+    float rim = (1.0 - dot(normalWorld, toEye));
     
-    if (rim.useSmoothstep)
-        rimRes = smoothstep(0.0, 1.0, rimRes);
+    if (useSmoothstep)
+        rim = smoothstep(0.0, 1.0, rim);
 
-    res += rimRes * rim.rimColor * rim.rimStrength;
+    rim = pow(abs(rim), rimPower);
 
-	colour = useTexture ? vec4(res, 1.0) * texture(theTexture, TexCoord) : vec4(res, 1.0);
+    res += rim * rimColor * rimStrength;
+
+	// colour = useTexture ? vec4(res, 1.0) * texture(theTexture, TexCoord) : vec4(res, 1.0);
+	colour = vec4(res, 1.0);
 }
