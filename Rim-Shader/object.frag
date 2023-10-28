@@ -73,7 +73,7 @@ vec3 blinnPhong(vec3 lightStrength, vec3 lightVec, vec3 normal, vec3 toEye)
 
 vec3 computeDirectionalLight(vec3 normal, vec3 toEye)
 {
-    vec3 lightVec = light.direction;
+    vec3 lightVec = -light.direction;
     
     float ndotl = max(dot(lightVec, normal), 0.0f);
     vec3 lightStrength = vec3(light.strength) * ndotl;
@@ -125,7 +125,7 @@ vec3 computeSpotLight(vec3 pos, vec3 normal, vec3 toEye)
         float att = calcAttenuation(d, light.fallOffStart, light.fallOffEnd);
         lightStrength *= att;
         
-        float spotFactor = pow(max(dot(lightVec, light.direction), 0.0f), light.spotPower);
+        float spotFactor = pow(max(-dot(lightVec, light.direction), 0.0f), light.spotPower);
         lightStrength *= spotFactor;
         
         return blinnPhong(lightStrength, lightVec, normal, toEye);

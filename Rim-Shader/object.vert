@@ -11,8 +11,8 @@ out vec2 TexCoord;
 layout(std140) uniform Vertices
 {
 	mat4 model; // 64			0
-	mat4 projection; // 64		64
-	mat4 view; // 64			128
+	mat4 view; // 64		64
+	mat4 projection; // 64			128
 	// 192
 };
 
